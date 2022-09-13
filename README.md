@@ -1,5 +1,5 @@
 # MyJournal
-A desktop app that allows for simple text and note-taking, that can be protected with SHA-256 bit encryption.
+A desktop app that allows for simple text and note-taking, that can be protected with AES-256 bit encryption.
 
 The name of this app largely outlines its purposes: The MyJournal app is meant to serve as an even more well-protected personal journal.
 
@@ -9,7 +9,7 @@ A user would only have to keep up with their keys, and use those keys to open ce
 
 There are four files that encompass the MyJournal desktop app (at this time):
 
-* HeavyEncryption - .java file that uses the javax.crypto resources to perform encryptions and decryptions in SHA-256, when given a key.
+* HeavyEncryption - .java file that uses the javax.crypto resources to perform encryptions and decryptions in AES-256, when given a key.
 
 * JournalWindow - .java file that holds the bulk of the app. Creates the main screen, along with the text file screens for opening and saving files.
 
@@ -79,11 +79,36 @@ and creates the UI. Adds a menu bar with the standard File, Edit and Help Button
   The action listener will ask the user if they would like to use a custom key or a key of their own choice.
   
    * If they choose to use a custom key, the user will be prompted for the key and will encrypt the text using the key and the salt (NOTE: For now, the salt is a naive "1234" until a proper way of implementing the salt can be done. See Next Steps). It will then prompt the user to save the file.
+   
+   * Additional note: The key is also encrypted INTO the file itself. See OpenFileButton.java's documentation for the reason for this.
+   
    * Otherwise, a random key will be made using the randomKey method, and that will serve as the key for the encryption and saving process.
+   
+## OpenFileButon.java
+
+### get
+
+  Method for returning the loaction listener for the Open button. This method receives:
+ 
+  * A boolean representing whether or not the user has been authenticated (NOT fully implemented - see Next Steps),
+  
+  * A FileChooser for opening the local directory,
+  
+  * The window created from the journalStage() method,
+  
+  * A TextArea representing the text for the journalStage,
+  
+  * The ExtensionFilter for filtering by .mjor files.
+  
+ The action listener will ask the user for a key to be used for decrypting the file.
+ 
+  * The file will START to be encrypted. However, the true key is encrypted into the file. If the true key in the decryption does not match the key the user choice, it will stop decrypting and return that the key is incorrect. This is to save time decrypting a large text file that will otherwise end up being false.
+  
+  * Assuming the chosen key matches the true key, it will finish decrypting and display the file contents. The window will be renamed to the name of the file, and edits can be made, and saved once more.
 
 # Version 0.1
  
  * Baseline inital menu, file openers, and savers have been made. Some CSS was done to create a more approachable UI, but some improvements can be made.
  
- * SHA-256 encryption is applied to all .mjor files, but for the purposes of ensuring everything worked, some secure variables are unsecure (i.e. not private).
+ * AES-256 encryption is applied to all .mjor files, but for the purposes of ensuring everything worked, some secure variables are unsecure (i.e. not private).
  
