@@ -1,4 +1,4 @@
-package dataStructures;
+
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.geometry.*;
