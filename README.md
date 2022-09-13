@@ -121,7 +121,7 @@ and creates the UI. Adds a menu bar with the standard File, Edit and Help Button
  
  * Creating set methods for the secretKey and salt for those same reasons.
 
- * Utilization of salt in the AES SaveFileButton and OpenFileButton class: Potentially, salt could be the same as the key, but unsure if it's secure to do so.
+ * Utilization of salt in the SaveFileButton and OpenFileButton class: Potentially, salt could be the same as the key, but unsure if it's secure to do so.
  
  * Utilization of authenticated:
  
