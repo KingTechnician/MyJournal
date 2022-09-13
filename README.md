@@ -41,7 +41,28 @@ Below will include descriptions of each file, their purpose, and the nature of t
 
  * Receives an unencrypted message. Uses the getBinaries method to receive each character in binary form. Encrypts each binary element using the encrypt method. Returns those encrypted binary values.
 
-This file handles all of the encryption and decryption of text in files using SHA-256 bit encryption. The method of encrypting and decrypting the text is as follows:
+## JournalWindow.java
+
+### journalStage
+
+ * Receives several elements necessary for the file writer: 
+   * FileChooser for opening local directory, 
+   * ExtensionFilter to filter by .mjor files, 
+   * TextArea for holding the text desired for the file, 
+
+and creates the UI. Adds a menu bar with the standard File, Edit and Help Buttons (Edit is likely to be removed in future versions). Uses the OpenFileButton and SaveFileButton java files to assign action listeners to the Open and Save buttons. Sets a New button to create a new file. Sets a close event of clearing the text when the user decides to close the window. Returns this entire window as a Stage.
+ 
+### randomCode (NOT in use, for now)
+
+ * Uses the Random class, along with an array, to return a String representation of 7 values randomized between the numbers 0 and 9.
+ 
+### randomKey (See SaveFileButton.java for context)
+
+ * Creates a randomKey for encryption that returns a key with one random letter, followed by 7 numbers, randomized to numbers from 0 to 9. Returns key as a String.
+ 
+### start
+
+ * The required method for starting JavaFX applications. Creates a decently approachable GUI with a small introduction, along with two buttons for opening a file or creating a new file. Also uses OpenFileButton for the action listener for the Open button. Includes a New button for creating new files.
 
 # Version 0.1
  
@@ -49,4 +70,3 @@ This file handles all of the encryption and decryption of text in files using SH
  
  * SHA-256 encryption is applied to all .mjor files, but for the purposes of ensuring everything worked, some secure variables are unsecure (i.e. not private).
  
- * 
