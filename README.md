@@ -63,6 +63,23 @@ and creates the UI. Adds a menu bar with the standard File, Edit and Help Button
 ### start
 
  * The required method for starting JavaFX applications. Creates a decently approachable GUI with a small introduction, along with two buttons for opening a file or creating a new file. Also uses OpenFileButton for the action listener for the Open button. Includes a New button for creating new files.
+ 
+## SaveFileButton.java
+
+### get
+
+ * Method for returning the action listener for the Save button. This method receives:
+ 
+   * The TextArea representing the journal entry,
+   
+   * The FileChooser for saving to the local directory,
+   
+   * The Stage representing the window made from the journalStage method.
+   
+  The action listener will ask the user if they would like to use a custom key or a key of their own choice.
+  
+   * If they choose to use a custom key, the user will be prompted for the key and will encrypt the text using the key and the salt (NOTE: For now, the salt is a naive "1234" until a proper way of implementing the salt can be done. See Next Steps). It will then prompt the user to save the file.
+   * Otherwise, a random key will be made using the randomKey method, and that will serve as the key for the encryption and saving process.
 
 # Version 0.1
  
