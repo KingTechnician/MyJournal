@@ -112,3 +112,23 @@ and creates the UI. Adds a menu bar with the standard File, Edit and Help Button
  
  * AES-256 encryption is applied to all .mjor files, but for the purposes of ensuring everything worked, some secure variables are unsecure (i.e. not private).
  
+ 
+# Next Steps
+
+ * Improvements to the CSS to make it look more appealing and vision-friendly.
+ 
+ * Making necessary variables (authenticated, secretKey, salt) private for security purposes.
+ 
+ * Creating set methods for the secretKey and salt for those same reasons.
+
+ * Utilization of salt in the AES SaveFileButton and OpenFileButton class: Potentially, salt could be the same as the key, but unsure if it's secure to do so.
+ 
+ * Utilization of authenticated:
+ 
+    * authenticated is planned to be used for an email authentication. While there is already prepared code for using this through the JavaMail API:
+    
+      1. It is done through a Yahoo email, which can have its computation limits and would not be a long-term solution, if this were to be used by even hundreds of users.
+      2. The current code, due to it being a patchwork status, does not securely store the credentials for this email. It would be better to create some form of secure email server, then connect it directly to the app. 
+    * Research is ongoing for how to do this properly.
+     
+  * Running the app as an executable: As of now, no process has been done to make the program runnable directly on a Windows machine without using Java SE or some other compiler/IDE.
