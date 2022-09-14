@@ -19,7 +19,7 @@ There are four files that encompass the MyJournal desktop app (at this time):
 
 Below will include descriptions of each file, their purpose, and the nature of the functions within them.
 
-## HeavyEncrpytion.java
+## HeavyEncryption.java
 
 ### encrypt
 
