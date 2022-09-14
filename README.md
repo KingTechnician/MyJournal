@@ -7,10 +7,13 @@ The typical nature of keeping a locked notebook is taken to the next level with 
 
 A user would only have to keep up with their keys, and use those keys to open certain files.
 
-There are four files that encompass the MyJournal desktop app (at this time):
+The following are the files that encompass the MyJournal desktop app (at this time):
 
 * HeavyEncryption - .java file that uses the javax.crypto resources to perform encryptions and decryptions in AES-256, when given a key.
 
+* JournalApp - .java file that holds the initializer for the app. Starts the app and creates the main screen.
+
+* JournalStage - .java file that holds a function that returns the editor for .mjor files.
 
 * OpenFileButton - .java file that holds a function that returns an ActionEvent for opening .mjor files.
 
@@ -34,9 +37,9 @@ There are four files that encompass the MyJournal desktop app (at this time):
 
  * Improvements to the CSS to make it look more appealing and vision-friendly.
  
- * Utilization of authenticated:
+ * Email authentication:
  
-    * authenticated is planned to be used for an email authentication. While there is already prepared code for using this through the JavaMail API:
+    * MyJournal is planned to include an email authentication. While there is already prepared code for using this through the JavaMail API:
     
       1. It is done through a Yahoo email, which can have its computation limits and would not be a long-term solution, if this were to be used by even hundreds of users.
       2. The current code, due to it being a patchwork status, does not securely store the credentials for this email. It would be better to create some form of secure email server, then connect it directly to the app. 
