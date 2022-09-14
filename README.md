@@ -37,6 +37,8 @@ The following are the files that encompass the MyJournal desktop app (at this ti
 
  * Improvements to the CSS to make it look more appealing and vision-friendly.
  
+ * A Settings window for some basic color and font changes (dark mode, to start)
+ 
  * Email authentication:
  
     * MyJournal is planned to include an email authentication. While there is already prepared code for using this through the JavaMail API:
