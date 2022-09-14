@@ -11,7 +11,9 @@ There are four files that encompass the MyJournal desktop app (at this time):
 
 * HeavyEncryption - .java file that uses the javax.crypto resources to perform encryptions and decryptions in AES-256, when given a key.
 
-* JournalWindow - .java file that holds the bulk of the app. Creates the main screen, along with the text file screens for opening and saving files.
+* JournalWindow - .java file that holds the initializer of the app. Creates the main screen.
+
+* JournalStage - .java file that holds a function that returns a Stage representing the window for opening and saving files.
 
 * OpenFileButton - .java file that holds a function that returns an ActionEvent for opening .mjor files.
 
@@ -111,6 +113,12 @@ and creates the UI. Adds a menu bar with the standard File, Edit and Help Button
  * Baseline inital menu, file openers, and savers have been made. Some CSS was done to create a more approachable UI, but some improvements can be made.
  
  * AES-256 encryption is applied to all .mjor files, but for the purposes of ensuring everything worked, some secure variables are unsecure (i.e. not private).
+ 
+# Version 0.0.2 - Minor Security Patch and Retouching
+
+ * AES class now has the salt and secretKey variables set as private.
+ 
+ * New file JournalStage.java holds a method that returns the window for opening and saving files.
  
  
 # Next Steps
