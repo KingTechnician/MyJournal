@@ -18,7 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import java.util.Random;
 
-public class JournalWindow extends Application
+public class JournalApp extends Application
 {
 	boolean authenticated = true;
 	public String randomCode()
