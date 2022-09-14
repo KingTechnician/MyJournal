@@ -1,4 +1,4 @@
-
+package dataStructures;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.stage.FileChooser;
@@ -31,11 +31,9 @@ public class SaveFileButton
 					keyDialog.setHeaderText("Choose a desired key");
 					Optional<String> receiveKey = keyDialog.showAndWait();
 					String getKey = receiveKey.get();
-					HeavyEncryption.AES.secretKey = getKey;
-					getKey+="\n";
-					HeavyEncryption.AES.salt = "1234";
-					String[] setBinaries = HeavyEncryption.formEncryptedBinaries(journalEntry.getText());
-					String[] binaryKeys = HeavyEncryption.formEncryptedBinaries(getKey);
+					HeavyEncryption.AES aes = new HeavyEncryption.AES(getKey,"1234");
+					String[] setBinaries = aes.formEncryptedBinaries(journalEntry.getText());
+					String[] binaryKeys = aes.formEncryptedBinaries(getKey);
 					String[] getBinaries = new String[setBinaries.length+binaryKeys.length];
 					int arrayCount = 0;
 					for (int i = 0; i<binaryKeys.length;i++)
@@ -73,11 +71,10 @@ public class SaveFileButton
 				else
 				{
 					String randomCode = new JournalWindow().randomKey();
-					HeavyEncryption.AES.secretKey = randomCode;
+					HeavyEncryption.AES aes = new HeavyEncryption.AES(randomCode,"1234");
 					randomCode+="\n";
-					HeavyEncryption.AES.salt = "1234";
-					String[] setBinaries = HeavyEncryption.formEncryptedBinaries(journalEntry.getText());
-					String[] binaryKeys = HeavyEncryption.formEncryptedBinaries(randomCode);
+					String[] setBinaries = aes.formEncryptedBinaries(journalEntry.getText());
+					String[] binaryKeys = aes.formEncryptedBinaries(randomCode);
 					String[] getBinaries = new String[setBinaries.length+binaryKeys.length];
 					int arrayCount = 0;
 					for (int i = 0; i<binaryKeys.length;i++)

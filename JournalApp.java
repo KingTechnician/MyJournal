@@ -1,4 +1,4 @@
-
+package dataStructures;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.geometry.*;
@@ -21,59 +21,6 @@ import java.util.Random;
 public class JournalWindow extends Application
 {
 	boolean authenticated = true;
-	public Stage journalStage(FileChooser fileChooser,FileChooser.ExtensionFilter fileFilter, TextArea journalEntry)
-	{
-		Stage journalStage = new Stage();
-		MenuBar menuBar = new MenuBar();
-		fileChooser.getExtensionFilters().add(fileFilter);
-		Menu fileMenu = new Menu("File");
-		Menu editMenu = new Menu("Edit");
-		Menu helpMenu = new Menu("Help");
-		MenuItem openFileItem = new MenuItem("Open File");
-		MenuItem saveItem = new MenuItem("Save File");
-		MenuItem exitItem = new MenuItem("Exit");
-		MenuItem cutItem = new MenuItem("Cut");
-		MenuItem copyItem = new MenuItem("Copy");
-		MenuItem pasteItem=  new MenuItem("Paste");
-		exitItem.setOnAction(new EventHandler<ActionEvent>()
-		{
-			public void handle(ActionEvent event)
-			{
-				journalEntry.setText("");
-				journalStage.close();
-			}
-		});
-		openFileItem.setOnAction(OpenFileButton.get(authenticated, fileChooser, journalStage, journalEntry, fileFilter));
-		saveItem.setOnAction(SaveFileButton.get(journalEntry, fileChooser, journalStage));
-		saveItem.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
-		openFileItem.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
-		fileMenu.getItems().addAll(saveItem,openFileItem,exitItem);
-		editMenu.getItems().addAll(cutItem,copyItem,pasteItem);
-		
-		menuBar.getMenus().addAll(fileMenu,editMenu,helpMenu);
-		
-		journalEntry.setPrefHeight(200);
-		journalEntry.setPrefWidth(500);
-		BorderPane root = new BorderPane();
-		root.setTop(menuBar);
-		root.setCenter(journalEntry);
-		Scene scene = new Scene(root,600,600);
-		journalStage.setTitle("New File");
-		journalStage.setScene(scene);
-		Rectangle2D screen = Screen.getPrimary().getBounds();
-		journalStage.setHeight(screen.getHeight());
-		journalStage.setWidth(screen.getWidth());
-		EventHandler<WindowEvent> closeHandler = new EventHandler<WindowEvent>() 
-		{
-			public void handle (WindowEvent event)
-			{
-				journalEntry.setText("");
-			}
-		};
-		journalStage.setOnCloseRequest(closeHandler);
-		//primaryStage.show();
-		return journalStage;
-	}
 	public String randomCode()
 	{
 		Random rand = new Random();
@@ -164,7 +111,7 @@ public class JournalWindow extends Application
 				Rectangle2D screen = Screen.getPrimary().getBounds();
 				double width = screen.getWidth();
 				double height = screen.getHeight();
-				Stage newStage = journalStage(fileChooser,fileFilter,journalEntry);
+				Stage newStage = JournalStage.get(authenticated,fileChooser,fileFilter,journalEntry);
 				newStage.setWidth(width);
 				newStage.setHeight(height);
 				newStage.setMaximized(true);

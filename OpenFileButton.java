@@ -1,4 +1,4 @@
-
+package dataStructures;
 import javafx.event.*;
 import javafx.geometry.*;
 import javafx.stage.FileChooser;
@@ -30,8 +30,7 @@ public class OpenFileButton
 						{
 							break;
 						}
-					}
-					
+					}					
 					String fileContent = "";
 					if(openFile!=null)
 					{
@@ -39,8 +38,7 @@ public class OpenFileButton
 						keyDialog.setHeaderText("Enter the specified key here");
 						Optional<String> key = keyDialog.showAndWait();
 						String getKey = key.get();
-						HeavyEncryption.AES.secretKey = getKey;
-						HeavyEncryption.AES.salt = "1234";
+						HeavyEncryption.AES aes = new HeavyEncryption.AES(getKey,"1234");
 						try
 						{
 							int count = 0;
@@ -56,16 +54,18 @@ public class OpenFileButton
 							for (int i = 0; i<count;i++)
 							{
 								String newBinary = "";
-								newBinary = HeavyEncryption.AES.decrypt(readFile.nextLine());
+								newBinary = aes.decrypt(readFile.nextLine());
 								getBinaries.add(newBinary);
 								System.out.println(newBinary);
+								System.out.println(aes.getKey());
+								System.out.println(aes.getSalt());
 							}
 							readFile.close();
 							int keyCount = 0;
 							String keyfromFile = "";
 							for (String binary:getBinaries)
 							{
-								if(keyCount<=getKey.length())
+								if(keyCount<getKey.length())
 								{
 									keyfromFile+= HeavyEncryption.convertToString(binary);
 								}
@@ -77,12 +77,11 @@ public class OpenFileButton
 							}
 							getKey = getKey.replaceAll("\\P{Print}","");
 							keyfromFile = keyfromFile.replaceAll("\\P{Print}","");
-							
 							if(getKey.equals(keyfromFile))
 							{
 								TextArea newInformation = new TextArea(journalEntry.getText()+fileContent);
 								System.out.println("New information: "+newInformation);
-								Stage newStage = new JournalWindow().journalStage(fileChooser,fileFilter,newInformation);
+								Stage newStage = JournalStage.get(authenticated,fileChooser,fileFilter,newInformation);
 								newStage.setTitle(openFile.getName());
 								Rectangle2D screen = Screen.getPrimary().getBounds();
 								newStage.setHeight(screen.getHeight());
