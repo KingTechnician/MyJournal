@@ -22,6 +22,8 @@ There are four files that encompass the MyJournal desktop app (at this time):
  
  * AES-256 encryption is applied to all .mjor files, but for the purposes of ensuring everything worked, some secure variables are unsecure (i.e. not private).
  
+# Version 0.0.2
+ 
  * AES class now has the salt and secretKey methods private, for secure best practice.
  
  * New .java file called JournalStage.java that will be creating the window for opening and saving files. This will be used by other files in the future.
