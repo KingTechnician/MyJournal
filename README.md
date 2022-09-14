@@ -106,7 +106,7 @@ and creates the UI. Adds a menu bar with the standard File, Edit and Help Button
   
   * Assuming the chosen key matches the true key, it will finish decrypting and display the file contents. The window will be renamed to the name of the file, and edits can be made, and saved once more.
 
-# Version 0.1
+# Version 0.0.1
  
  * Baseline inital menu, file openers, and savers have been made. Some CSS was done to create a more approachable UI, but some improvements can be made.
  
