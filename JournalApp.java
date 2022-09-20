@@ -79,7 +79,7 @@ public class JournalApp extends Application
 		Button newFileButton = new Button("New File");
 		Font openFont = Font.font("Courier New",FontWeight.BOLD,36);
 		Button openButton = new Button("Open File");
-		Button testButton = new Button("Testing Color Changes");
+		Button testButton = new Button("Switch Colors");
 		
 		newFileButton.setFont(openFont);
 		newFileButton.setMinWidth(200);
