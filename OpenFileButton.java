@@ -1,4 +1,4 @@
-package dataStructures;
+package journal;
 import javafx.event.*;
 import javafx.geometry.*;
 import javafx.stage.FileChooser;
@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 public class OpenFileButton 
 {
-	public static EventHandler<ActionEvent> get(boolean authenticated,FileChooser fileChooser,Stage journalStage,TextArea journalEntry,FileChooser.ExtensionFilter fileFilter)
+	public static EventHandler<ActionEvent> get(String mode,boolean authenticated,FileChooser fileChooser,Stage journalStage,TextArea journalEntry,FileChooser.ExtensionFilter fileFilter)
 	{
 		EventHandler<ActionEvent> openFileHandler = new EventHandler<ActionEvent>()
 		{
@@ -22,6 +22,7 @@ public class OpenFileButton
 			{
 				if(authenticated)
 				{
+					System.out.println("Open File Button Mode: "+mode);
 					File openFile = fileChooser.showOpenDialog(journalStage);
 					while(openFile!=null&&!openFile.getName().endsWith(".mjor"))
 					{
@@ -81,7 +82,8 @@ public class OpenFileButton
 							{
 								TextArea newInformation = new TextArea(journalEntry.getText()+fileContent);
 								System.out.println("New information: "+newInformation);
-								Stage newStage = JournalStage.get(authenticated,fileChooser,fileFilter,newInformation);
+								System.out.println("Journal Mode Choice: "+mode);
+								Stage newStage = JournalStage.get(mode,authenticated,fileChooser,fileFilter,newInformation);
 								newStage.setTitle(openFile.getName());
 								Rectangle2D screen = Screen.getPrimary().getBounds();
 								newStage.setHeight(screen.getHeight());

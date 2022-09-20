@@ -19,13 +19,13 @@ The following are the files that encompass the MyJournal desktop app (at this ti
 
 * SaveFileButton - .java file that holds a function that returns an ActionEvent for saving .mjor files.
 
-# Version 0.0.1
+# Version 0.0.1 - The Baseline
  
  * Baseline inital menu, file openers, and savers have been made. Some CSS was done to create a more approachable UI, but some improvements can be made.
  
  * AES-256 encryption is applied to all .mjor files, but for the purposes of ensuring everything worked, some secure variables are unsecure (i.e. not private).
  
-# Version 0.0.2
+# Version 0.0.2 - Security Improvements and Clarifications
  
  * AES class now has the salt and secretKey methods private, for secure best practice.
  
@@ -33,9 +33,16 @@ The following are the files that encompass the MyJournal desktop app (at this ti
  
  * JournalWindow.java has been renamed to *JournalApp.java* for clarity. 
  
+ # Version 0.0.4 - The CSS Update
+ 
+ * New fancy, yet viewable color scheme for the main menu, along with a color scheme for a dark version
+ * All buttons, menus, and file openers receive their styles from .css files through JavaFX.
+ 
 # Next Steps
 
- * Improvements to the CSS to make it look more appealing and vision-friendly.
+ * Ensuring that the CSS change are consistent throughout the continuation of opening files
+ 
+   * This will more than likely be done through a configurations file that allows users to save their settings to
  
  * A Settings window for some basic color and font changes (dark mode, to start)
  

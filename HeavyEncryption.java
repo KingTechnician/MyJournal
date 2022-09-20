@@ -1,4 +1,4 @@
-package dataStructures;
+package journal;
 import javax.crypto.*;
 import javax.crypto.spec.*;
 import java.nio.charset.StandardCharsets;
