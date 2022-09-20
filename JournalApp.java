@@ -1,4 +1,4 @@
-package dataStructures;
+package journal;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.geometry.*;
@@ -17,10 +17,20 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import java.util.Random;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 public class JournalApp extends Application
 {
+	String mode;
 	boolean authenticated = true;
+	public void setMode(String m)
+	{
+		this.mode = m;
+	}
+	public String getMode()
+	{
+		return this.mode;
+	}
 	public String randomCode()
 	{
 		Random rand = new Random();
@@ -50,8 +60,9 @@ public class JournalApp extends Application
 		System.out.println(randomKey);
 		return randomKey;
 	}
-	public void start(Stage primaryStage)
+	public void start(Stage primaryStage) throws IOException
 	{
+		mode = "";
 		TextArea journalEntry = new TextArea();
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("MJOR files (*.mjor)","*.mjor");
@@ -61,61 +72,78 @@ public class JournalApp extends Application
 		journalStage.setTitle("Welcome Page");
 		GridPane welcomeGrid = new GridPane();
 		StackPane welcomeMessage = new StackPane();
+		
+		
 		Label welcome = new Label("Share Your Thoughts with MyJournal");
 		Text purpose = new Text("At MyJournal, we want to make sure our users can write and store private thoughts for the purpose of catharsis, \nventing, and various other secure tasks.");
-		Button openButton = new Button("New File");
+		Button newFileButton = new Button("New File");
 		Font openFont = Font.font("Courier New",FontWeight.BOLD,36);
-		Button secondOpenButton = new Button("Open File");
-		secondOpenButton.setFont(openFont);
-		double buttonWidth = journalStage.getMinWidth()/1;
-		double buttonHeight = journalStage.getMinHeight()/1;
-		secondOpenButton.setMinWidth(200);
-		secondOpenButton.setMinHeight(200);
+		Button openButton = new Button("Open File");
+		Button testButton = new Button("Testing Color Changes");
+		
+		newFileButton.setFont(openFont);
+		newFileButton.setMinWidth(200);
+		newFileButton.setMinHeight(200);
+		newFileButton.setStyle(JournalStyles.getStyle("button"));
+		
 		openButton.setFont(openFont);
 		openButton.setMinWidth(200);
 		openButton.setMinHeight(200);
-		openButton.setStyle("#Button {\r\n"
-				+ "    -fx-padding: 8 15 15 15;\r\n"
-				+ "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\r\n"
-				+ "    -fx-background-radius: 8;\r\n"
-				+ "    -fx-background-color: \r\n"
-				+ "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\r\n"
-				+ "        #9d4024,\r\n"
-				+ "        #d86e3a,\r\n"
-				+ "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\r\n"
-				+ "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\r\n"
-				+ "    -fx-font-weight: bold;\r\n"
-				+ "    -fx-font-size: 1.1em;\r\n"
-				+ "}\r\n"
-				+ "#Button:hover {\r\n"
-				+ "    -fx-background-color: \r\n"
-				+ "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\r\n"
-				+ "        #9d4024,\r\n"
-				+ "        #d86e3a,\r\n"
-				+ "        radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);\r\n"
-				+ "}\r\n"
-				+ "#Button:pressed {\r\n"
-				+ "    -fx-padding: 10 15 13 15;\r\n"
-				+ "    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;\r\n"
-				+ "}\r\n"
-				+ "#Button Text {\r\n"
-				+ "    -fx-fill: white;\r\n"
-				+ "    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );\r\n"
-				+ "} ");
-		secondOpenButton.setStyle(openButton.getStyle());
-		secondOpenButton.setOnAction(OpenFileButton.get(authenticated, fileChooser, journalStage, journalEntry, fileFilter));
-		openButton.setOnAction(new EventHandler<ActionEvent>()
+		openButton.setStyle(newFileButton.getStyle());
+		System.out.println(mode);
+		openButton.setOnAction(OpenFileButton.get(mode,authenticated, fileChooser, journalStage, journalEntry, fileFilter));
+		
+		testButton.setFont(openFont);
+		testButton.setMinWidth(200);
+		testButton.setMinHeight(200);
+		testButton.setStyle(JournalStyles.getStyle("button"));
+		
+		testButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent event)
+			{
+				try
+				{
+					if(mode.equals(""))
+					{
+						mode = "dark";
+					}
+					else if(mode.equals("dark"))
+					{
+						mode = "";
+					}
+					newFileButton.setStyle(JournalStyles.getStyle(mode+"button"));
+					openButton.setStyle(JournalStyles.getStyle(mode+"button"));
+					testButton.setStyle(JournalStyles.getStyle(mode+"button"));
+					welcomeGrid.setStyle(JournalStyles.getStyle(mode+"mainmenu"));
+				}
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+		});
+		newFileButton.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent event)
 			{
 				Rectangle2D screen = Screen.getPrimary().getBounds();
 				double width = screen.getWidth();
 				double height = screen.getHeight();
-				Stage newStage = JournalStage.get(authenticated,fileChooser,fileFilter,journalEntry);
+				System.out.println("Open File Mode: "+mode);
+				Stage newStage = JournalStage.get(mode,authenticated,fileChooser,fileFilter,journalEntry);
 				newStage.setWidth(width);
 				newStage.setHeight(height);
 				newStage.setMaximized(true);
 				newStage.show();
+				if(mode.equals(""))
+				{
+					mode = "dark";
+				}
+				else if (mode.equals("dark"))
+				{
+					mode = "";
+				}
 			}
 		});
 		purpose.setWrappingWidth(journalStage.getMinWidth());
@@ -129,19 +157,15 @@ public class JournalApp extends Application
 		welcomeGrid.add(welcome, 0, 0);
 		welcomeGrid.add(purpose, 0, 1);
 		GridPane buttonGrid = new GridPane();
-		buttonGrid.add(openButton, 0, 0);
-		buttonGrid.add(secondOpenButton, 0, 1);
+		buttonGrid.add(newFileButton, 0, 0);
+		buttonGrid.add(openButton, 1, 0);
+		buttonGrid.add(testButton, 0, 2);
 		buttonGrid.setVgap(50);
 		welcomeGrid.add(buttonGrid,0,2);
 		welcomeGrid.setVgap(50);
 		GridPane.setValignment(welcome, VPos.CENTER);
 		Scene titleScene= new Scene(welcomeGrid,600,600);
-		welcomeGrid.setStyle(".root{\r\n"
-				+ "    -fx-font-size: 16pt;\r\n"
-				+ "    -fx-font-family: \"Courier New\";\r\n"
-				+ "    -fx-base: rgb(132, 145, 47);\r\n"
-				+ "    -fx-background: rgb(225, 228, 203);\r\n"
-				+ "}");
+		welcomeGrid.setStyle(JournalStyles.getStyle("mainmenu"));
 		journalStage.setScene(titleScene);
 		journalStage.show();
 	}

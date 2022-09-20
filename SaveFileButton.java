@@ -1,4 +1,4 @@
-package dataStructures;
+package journal;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.stage.FileChooser;
@@ -70,7 +70,7 @@ public class SaveFileButton
 				}
 				else
 				{
-					String randomCode = new JournalWindow().randomKey();
+					String randomCode = new JournalApp().randomKey();
 					HeavyEncryption.AES aes = new HeavyEncryption.AES(randomCode,"1234");
 					randomCode+="\n";
 					String[] setBinaries = aes.formEncryptedBinaries(journalEntry.getText());

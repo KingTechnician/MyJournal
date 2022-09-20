@@ -1,9 +1,13 @@
-package dataStructures;
+package journal;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -17,7 +21,7 @@ import javafx.stage.WindowEvent;
 
 public class JournalStage 
 {
-	public static Stage get(boolean authenticated,FileChooser fileChooser,FileChooser.ExtensionFilter fileFilter,TextArea journalEntry)
+	public static Stage get(String mode,boolean authenticated,FileChooser fileChooser,FileChooser.ExtensionFilter fileFilter,TextArea journalEntry)
 	{
 		Stage journalStage = new Stage();
 		MenuBar menuBar = new MenuBar();
@@ -25,6 +29,27 @@ public class JournalStage
 		Menu fileMenu = new Menu("File");
 		Menu editMenu = new Menu("Edit");
 		Menu helpMenu = new Menu("Help");
+		if(mode.equals("dark"))
+		{
+			fileMenu = new Menu("");
+			editMenu = new Menu("");
+			helpMenu = new Menu("");
+			Label f = new Label("File");
+			f.setStyle("-fx-text-fill:white");
+			fileMenu.setGraphic(f);
+			f = new Label("Edit");
+			f.setStyle("-fx-text-fill:white");
+			editMenu.setGraphic(f);
+			f = new Label("Help");
+			f.setStyle("-fx-text-fill:white");
+			helpMenu.setGraphic(f);
+			menuBar.setStyle("-fx-background-color: linear-gradient(to top, #040b4d, #7878c4);");
+			journalEntry.setStyle("-fx-control-inner-background: #040b4d;");
+		}
+		else
+		{
+			journalEntry.setStyle("");
+		}
 		MenuItem openFileItem = new MenuItem("Open File");
 		MenuItem saveItem = new MenuItem("Save File");
 		MenuItem exitItem = new MenuItem("Exit");
@@ -39,7 +64,7 @@ public class JournalStage
 				journalStage.close();
 			}
 		});
-		openFileItem.setOnAction(OpenFileButton.get(authenticated, fileChooser, journalStage, journalEntry, fileFilter));
+		openFileItem.setOnAction(OpenFileButton.get(mode,authenticated, fileChooser, journalStage, journalEntry, fileFilter));
 		saveItem.setOnAction(SaveFileButton.get(journalEntry, fileChooser, journalStage));
 		saveItem.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
 		openFileItem.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
@@ -47,7 +72,6 @@ public class JournalStage
 		editMenu.getItems().addAll(cutItem,copyItem,pasteItem);
 		
 		menuBar.getMenus().addAll(fileMenu,editMenu,helpMenu);
-		
 		journalEntry.setPrefHeight(200);
 		journalEntry.setPrefWidth(500);
 		BorderPane root = new BorderPane();
