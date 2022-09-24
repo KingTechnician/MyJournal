@@ -72,7 +72,7 @@ public class JournalApp extends Application
 		Button newFileButton = new Button("New File");
 		Font openFont = Font.font("Courier New",FontWeight.BOLD,36);
 		Button openButton = new Button("Open File");
-		Button testButton = new Button("Testing Color Changes");
+		Button testButton = new Button("Change Mode");
 		
 		newFileButton.setFont(openFont);
 		newFileButton.setMinWidth(200);
@@ -104,6 +104,7 @@ public class JournalApp extends Application
 						testButton.setStyle(JournalStyles.getStyle("darkbutton"));
 						welcomeGrid.setStyle(JournalStyles.getStyle("darkmainmenu"));
 						configurations.put("<mode>", "dark");
+						testButton.setText("Change to Light Mode");
 					}
 					else
 					{
@@ -112,6 +113,7 @@ public class JournalApp extends Application
 						testButton.setStyle(JournalStyles.getStyle("button"));
 						welcomeGrid.setStyle(JournalStyles.getStyle("mainmenu"));
 						configurations.put("<mode>", "default");
+						testButton.setText("Change to Dark Mode");
 					}
 					Configurations.saveConfigurations(configurations);
 					
