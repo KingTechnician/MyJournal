@@ -16,21 +16,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+
+import java.util.HashMap;
 import java.util.Random;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 public class JournalApp extends Application
 {
-	String mode;
 	boolean authenticated = true;
-	public void setMode(String m)
-	{
-		this.mode = m;
-	}
-	public String getMode()
-	{
-		return this.mode;
-	}
 	public String randomCode()
 	{
 		Random rand = new Random();
@@ -62,7 +55,7 @@ public class JournalApp extends Application
 	}
 	public void start(Stage primaryStage) throws IOException
 	{
-		mode = "";
+		Configurations.createDefaultFile();
 		TextArea journalEntry = new TextArea();
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter fileFilter = new FileChooser.ExtensionFilter("MJOR files (*.mjor)","*.mjor");
@@ -79,7 +72,7 @@ public class JournalApp extends Application
 		Button newFileButton = new Button("New File");
 		Font openFont = Font.font("Courier New",FontWeight.BOLD,36);
 		Button openButton = new Button("Open File");
-		Button testButton = new Button("Switch Colors");
+		Button testButton = new Button("Change Mode");
 		
 		newFileButton.setFont(openFont);
 		newFileButton.setMinWidth(200);
@@ -90,8 +83,7 @@ public class JournalApp extends Application
 		openButton.setMinWidth(200);
 		openButton.setMinHeight(200);
 		openButton.setStyle(newFileButton.getStyle());
-		System.out.println(mode);
-		openButton.setOnAction(OpenFileButton.get(mode,authenticated, fileChooser, journalStage, journalEntry, fileFilter));
+		openButton.setOnAction(OpenFileButton.get(authenticated, fileChooser, journalStage, journalEntry, fileFilter));
 		
 		testButton.setFont(openFont);
 		testButton.setMinWidth(200);
@@ -104,18 +96,27 @@ public class JournalApp extends Application
 			{
 				try
 				{
-					if(mode.equals(""))
+					HashMap<String,String> configurations = Configurations.grabConfigurations();
+					if(configurations.get("<mode>")!=null && configurations.get("<mode>").equals("default"))
 					{
-						mode = "dark";
+						newFileButton.setStyle(JournalStyles.getStyle("darkbutton"));
+						openButton.setStyle(JournalStyles.getStyle("darkbutton"));
+						testButton.setStyle(JournalStyles.getStyle("darkbutton"));
+						welcomeGrid.setStyle(JournalStyles.getStyle("darkmainmenu"));
+						configurations.put("<mode>", "dark");
+						testButton.setText("Change to Light Mode");
 					}
-					else if(mode.equals("dark"))
+					else
 					{
-						mode = "";
+						newFileButton.setStyle(JournalStyles.getStyle("button"));
+						openButton.setStyle(JournalStyles.getStyle("button"));
+						testButton.setStyle(JournalStyles.getStyle("button"));
+						welcomeGrid.setStyle(JournalStyles.getStyle("mainmenu"));
+						configurations.put("<mode>", "default");
+						testButton.setText("Change to Dark Mode");
 					}
-					newFileButton.setStyle(JournalStyles.getStyle(mode+"button"));
-					openButton.setStyle(JournalStyles.getStyle(mode+"button"));
-					testButton.setStyle(JournalStyles.getStyle(mode+"button"));
-					welcomeGrid.setStyle(JournalStyles.getStyle(mode+"mainmenu"));
+					Configurations.saveConfigurations(configurations);
+					
 				}
 				catch (IOException e) 
 				{
@@ -130,20 +131,20 @@ public class JournalApp extends Application
 				Rectangle2D screen = Screen.getPrimary().getBounds();
 				double width = screen.getWidth();
 				double height = screen.getHeight();
-				System.out.println("Open File Mode: "+mode);
-				Stage newStage = JournalStage.get(mode,authenticated,fileChooser,fileFilter,journalEntry);
-				newStage.setWidth(width);
-				newStage.setHeight(height);
-				newStage.setMaximized(true);
-				newStage.show();
-				if(mode.equals(""))
+				Stage newStage;
+				try 
 				{
-					mode = "dark";
-				}
-				else if (mode.equals("dark"))
+					newStage = JournalStage.get(authenticated,fileChooser,fileFilter,journalEntry);
+					newStage.setWidth(width);
+					newStage.setHeight(height);
+					newStage.setMaximized(true);
+					newStage.show();
+				} 
+				catch (IOException e) 
 				{
-					mode = "";
+					e.printStackTrace();
 				}
+				HashMap<String,String> configurations = new HashMap<String,String>();
 			}
 		});
 		purpose.setWrappingWidth(journalStage.getMinWidth());

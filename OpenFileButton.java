@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 public class OpenFileButton 
 {
-	public static EventHandler<ActionEvent> get(String mode,boolean authenticated,FileChooser fileChooser,Stage journalStage,TextArea journalEntry,FileChooser.ExtensionFilter fileFilter)
+	public static EventHandler<ActionEvent> get(boolean authenticated,FileChooser fileChooser,Stage journalStage,TextArea journalEntry,FileChooser.ExtensionFilter fileFilter)
 	{
 		EventHandler<ActionEvent> openFileHandler = new EventHandler<ActionEvent>()
 		{
@@ -22,7 +23,6 @@ public class OpenFileButton
 			{
 				if(authenticated)
 				{
-					System.out.println("Open File Button Mode: "+mode);
 					File openFile = fileChooser.showOpenDialog(journalStage);
 					while(openFile!=null&&!openFile.getName().endsWith(".mjor"))
 					{
@@ -82,12 +82,12 @@ public class OpenFileButton
 							{
 								TextArea newInformation = new TextArea(journalEntry.getText()+fileContent);
 								System.out.println("New information: "+newInformation);
-								System.out.println("Journal Mode Choice: "+mode);
-								Stage newStage = JournalStage.get(mode,authenticated,fileChooser,fileFilter,newInformation);
+								Stage newStage = JournalStage.get(authenticated,fileChooser,fileFilter,newInformation);
 								newStage.setTitle(openFile.getName());
 								Rectangle2D screen = Screen.getPrimary().getBounds();
 								newStage.setHeight(screen.getHeight());
 								newStage.setWidth(screen.getWidth());
+								newStage.setMaximized(true);
 								newStage.show();
 							}
 							else
@@ -95,7 +95,7 @@ public class OpenFileButton
 								JOptionPane.showMessageDialog(null, "Incorrect Key.");
 							}
 						}
-						catch(FileNotFoundException e)
+						catch(IOException e)
 						{
 							e.printStackTrace();
 						}
