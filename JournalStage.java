@@ -2,6 +2,7 @@ package journal;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +22,7 @@ import javafx.stage.WindowEvent;
 
 public class JournalStage 
 {
-	public static Stage get(String mode,boolean authenticated,FileChooser fileChooser,FileChooser.ExtensionFilter fileFilter,TextArea journalEntry)
+	public static Stage get(boolean authenticated,FileChooser fileChooser,FileChooser.ExtensionFilter fileFilter,TextArea journalEntry) throws IOException
 	{
 		Stage journalStage = new Stage();
 		MenuBar menuBar = new MenuBar();
@@ -29,7 +30,8 @@ public class JournalStage
 		Menu fileMenu = new Menu("File");
 		Menu editMenu = new Menu("Edit");
 		Menu helpMenu = new Menu("Help");
-		if(mode.equals("dark"))
+		HashMap<String,String> configurations = Configurations.grabConfigurations();
+		if(configurations.get("<mode>")!=null && configurations.get("<mode>").equals("dark"))
 		{
 			fileMenu = new Menu("");
 			editMenu = new Menu("");
@@ -50,6 +52,7 @@ public class JournalStage
 		{
 			journalEntry.setStyle("");
 		}
+		Configurations.saveConfigurations(configurations);
 		MenuItem openFileItem = new MenuItem("Open File");
 		MenuItem saveItem = new MenuItem("Save File");
 		MenuItem exitItem = new MenuItem("Exit");
@@ -64,7 +67,7 @@ public class JournalStage
 				journalStage.close();
 			}
 		});
-		openFileItem.setOnAction(OpenFileButton.get(mode,authenticated, fileChooser, journalStage, journalEntry, fileFilter));
+		openFileItem.setOnAction(OpenFileButton.get(authenticated, fileChooser, journalStage, journalEntry, fileFilter));
 		saveItem.setOnAction(SaveFileButton.get(journalEntry, fileChooser, journalStage));
 		saveItem.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
 		openFileItem.setAccelerator(KeyCombination.keyCombination("Ctrl+O"));
