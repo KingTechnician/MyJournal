@@ -7,7 +7,7 @@ The typical nature of keeping a locked notebook is taken to the next level with 
 
 A user would only have to keep up with their keys, and use those keys to open certain files.
 
-The following are the files that encompass the MyJournal desktop app (at this time):
+The following are the files that encompass the MyJournal desktop app (at this time, not including .css files):
 
 * HeavyEncryption - .java file that uses the javax.crypto resources to perform encryptions and decryptions in AES-256, when given a key.
 
@@ -38,11 +38,11 @@ The following are the files that encompass the MyJournal desktop app (at this ti
  * New fancy, yet viewable color scheme for the main menu, along with a color scheme for a dark version
  * All buttons, menus, and file openers receive their styles from .css files through JavaFX.
  
-# Next Steps
-
- * Ensuring that the CSS change are consistent throughout the continuation of opening files
+ # Version 0.0.5 - Configuration File
  
-   * This will more than likely be done through a configurations file that allows users to save their settings to
+  * New configurations.txt file that saves certain information about the app and other settings. At the moment, it only holds the last time the program was opened and whether or not the app was in dark mode prior to the app being closed.
+ 
+# Next Steps
  
  * A Settings window for some basic color and font changes (dark mode, to start)
  
