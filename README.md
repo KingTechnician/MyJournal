@@ -1,5 +1,5 @@
 # MyJournal
-A desktop app that allows for simple text and note-taking, that can be protected with AES-256 bit encryption.
+A desktop app that allows for simple text and note-taking, that can be protected with AES-256-bit encryption.
 
 The name of this app largely outlines its purposes: The MyJournal app is meant to serve as an even more well-protected personal journal.
 
